@@ -1,9 +1,5 @@
-import express, { Request, Response, NextFunction } from "express";
-import helmet from "helmet";
-import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
-
 dotenv.config({
 	encoding: "utf-8",
 	debug:
@@ -12,6 +8,13 @@ dotenv.config({
 			: true,
 	path: path.resolve(__dirname, ".env"),
 });
+
+import express from "express";
+import helmet from "helmet";
+import cors from "cors";
+import AccountsController from "./controllers/AccountsController";
+import AccountService from "./services/AccountService";
+import AccountRepository from "./repositories/AccountRepository";
 
 const app = express();
 
@@ -23,6 +26,12 @@ app.use(
 	cors({
 		origin: [],
 	})
+);
+
+new AccountsController(
+	"/api/v1/accounts",
+	app,
+	new AccountService(new AccountRepository())
 );
 
 app.all("*", (req, res) => {
