@@ -125,18 +125,18 @@ class AccountsController {
 						request: {
 							method: req.method,
 							url: req.url,
-							code: err.GetStatus() || 500,
+							code: err instanceof HttpError ? err?.GetStatus() : 500,
 						},
-						data: err.GetData() || [],
+						data: err instanceof HttpError ? err?.GetData() : [],
 					},
 				});
 
-				const status = err.GetStatus() || 500;
+				const status = err instanceof HttpError ? err?.GetStatus() : 500;
 				const message = err.message || "Internal Server Error";
 
 				res.status(status).json({
 					status,
-					data: err.GetData() || [],
+					data: err instanceof HttpError ? err?.GetData() : [],
 					message,
 				});
 			}

@@ -10,6 +10,7 @@ import {
 
 import bcrypt from "bcryptjs";
 import { HttpBadRequest } from "../utils/HttpError";
+import JWT from "../utils/JWT";
 
 class AccountService implements IAccountService {
 	private repository: IAccountRepository;
@@ -50,7 +51,30 @@ class AccountService implements IAccountService {
 
 		if (!isMatch) throw new HttpBadRequest("INVALID__CREDENTIALS", null);
 
-		return "SUCCESS";
+		const accessToken = JWT.Builder()
+			.Data({
+				id: account[0].id,
+				username: payload.username,
+			})
+			.Expiration(Math.floor(Date.now() / 1000) + 60 * 15)
+			.SecretKey(process.env.TOKEN_ACCESS_KEY || "")
+			.Type("Bearer")
+			.Build();
+
+		const refreshToken = JWT.Builder()
+			.Data({
+				id: account[0].id,
+				username: payload.username,
+			})
+			.Expiration(Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30)
+			.SecretKey(process.env.TOKEN_REFRESH_KEY || "")
+			.Type("Bearer")
+			.Build();
+
+		const access_token = accessToken.Sign();
+		const refresh_token = refreshToken.Sign();
+
+		return { access_token, refresh_token };
 	}
 }
 
