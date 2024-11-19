@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { HttpInternalServerError } from "./HttpError";
+import { HttpInternalServerError, HttpUnauthorized } from "./HttpError";
 
 class JWTBuilder {
 	public data!: any;
@@ -68,6 +68,20 @@ class JWT {
 		return token;
 	}
 
+	public static Verify(token: string, secretKey: string): any | object {
+		try {
+			const decoded = jwt.verify(token, secretKey);
+			return decoded;
+		} catch (error) {
+			if (error instanceof jwt.JsonWebTokenError)
+				throw new HttpUnauthorized("UNAUTHORIZED", null);
+
+			if (error instanceof jwt.TokenExpiredError)
+				throw new HttpUnauthorized("UNAUTHORIZED", null);
+
+			throw new HttpInternalServerError("INTERNAL_SERVER_ERROR", null);
+		}
+	}
 	public static Builder(): JWTBuilder {
 		return new JWTBuilder();
 	}
