@@ -27,7 +27,7 @@ app.use(helmet());
 app.use(helmet.frameguard({ action: "deny" }));
 app.use(
 	cors({
-		origin: [],
+		origin: ["http://localhost:3001"],
 	})
 );
 
