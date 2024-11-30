@@ -104,6 +104,13 @@ class AccountsController {
 
 						const result = await this.service.Login({ username, password });
 
+						res.cookie("token", result, {
+							httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+							secure: true, // Use secure cookies (HTTPS only)
+							sameSite: "strict", // Prevent cross-site request forgery (CSRF)
+							maxAge: 3600 * 1000, // 1 hour
+						});
+
 						return res
 							.status(200)
 							.json({ statusCode: 200, data: result, message: "OK" });

@@ -1,11 +1,11 @@
 {
 	"name": "chat-app-server",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "server.js",
 	"scripts": {
 		"build": "npx tsc",
 		"start": "node dist/server.js",
-		"dev": "nodemon server.ts"
+		"dev": "nodemon src/server.ts"
 	},
 	"keywords": [],
 	"author": "",
