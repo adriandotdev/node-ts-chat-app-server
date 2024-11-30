@@ -8,6 +8,9 @@ const access: PoolOptions = {
 	password: process.env.DB_PASSWORD,
 	database: process.env.DB_DATABASE,
 	multipleStatements: true,
+	queueLimit: 0,
+	waitForConnections: true,
+	connectTimeout: Number(process.env.DB_CONNECTION_TIMEOUT),
 };
 
 let pool = mysql2.createPool(access);
