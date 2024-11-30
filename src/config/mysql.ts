@@ -11,6 +11,7 @@ const access: PoolOptions = {
 	queueLimit: 0,
 	waitForConnections: true,
 	connectTimeout: Number(process.env.DB_CONNECTION_TIMEOUT),
+	port: Number(process.env.DB_PORT),
 };
 
 let pool = mysql2.createPool(access);
