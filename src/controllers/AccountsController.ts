@@ -109,11 +109,7 @@ class AccountsController {
 							secure: true, // Use secure cookies (HTTPS only)
 							sameSite: "strict", // Prevent cross-site request forgery (CSRF)
 							maxAge: 3600 * 1000, // 1 hour,
-<<<<<<< HEAD
-							domain: process.env.NODE_ENV === "dev" ? "" : ".vercel.app",
-=======
-							domain: process.env.NODE_ENV === "dev" ? "" : "vercel.app",
->>>>>>> master
+							// domain: process.env.NODE_ENV === "dev" ? "" : "vercel.app",
 						});
 
 						return res
