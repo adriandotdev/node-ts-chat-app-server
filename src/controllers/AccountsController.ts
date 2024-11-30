@@ -107,7 +107,7 @@ class AccountsController {
 						res.cookie("token", result, {
 							httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
 							secure: true, // Use secure cookies (HTTPS only)
-							sameSite: "strict", // Prevent cross-site request forgery (CSRF)
+							sameSite: "none", // Prevent cross-site request forgery (CSRF)
 							maxAge: 3600 * 1000, // 1 hour,
 							// domain: process.env.NODE_ENV === "dev" ? "" : "vercel.app",
 						});
