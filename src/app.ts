@@ -27,7 +27,8 @@ app.use(helmet());
 app.use(helmet.frameguard({ action: "deny" }));
 app.use(
 	cors({
-		origin: ["http://localhost:3001"],
+		origin: ["http://localhost:3001", "https://next-ts-chat-app.vercel.app"],
+		methods: ["GET", "HEAD", "PUT", "POST", "PATCH", "DELETE"],
 		credentials: true,
 	})
 );
