@@ -9,6 +9,7 @@ dotenv.config({
 	path: path.resolve(__dirname, ".env"),
 });
 
+import cookieParser from "cookie-parser";
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
@@ -18,6 +19,9 @@ import AccountRepository from "./repositories/AccountRepository";
 import http from "http";
 import { Server } from "socket.io";
 import SocketService from "./services/SocketService";
+import ChatMessageController from "./controllers/ChatMessageController";
+import ChatMessageService from "./services/ChatMessageService";
+import ChatMessageRepository from "./repositories/ChatMessageRepository";
 
 const app = express();
 
@@ -32,7 +36,7 @@ app.use(
 		credentials: true,
 	})
 );
-
+app.use(cookieParser());
 const httpServer = http.createServer(app);
 
 let io = new Server(httpServer);
@@ -43,6 +47,11 @@ new AccountsController(
 	"/api/v1/accounts",
 	app,
 	new AccountService(new AccountRepository())
+);
+new ChatMessageController(
+	"/api/v1/messages",
+	app,
+	new ChatMessageService(new ChatMessageRepository())
 );
 
 app.all("*", (req, res) => {

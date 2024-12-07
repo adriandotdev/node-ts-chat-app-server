@@ -56,7 +56,7 @@ class AccountService implements IAccountService {
 				id: account[0].id,
 				username: payload.username,
 			})
-			.Expiration(Math.floor(Date.now() / 1000) + 60 * 15)
+			.Expiration(Math.floor(Date.now() / 1000) + 60 * 1)
 			.SecretKey(process.env.TOKEN_ACCESS_KEY || "")
 			.Type("Bearer")
 			.Build();

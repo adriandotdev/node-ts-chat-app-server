@@ -16,6 +16,12 @@ class ChatMessageService implements IChatMessageService {
 
 		return result;
 	}
+
+	async GetChatList(id: number) {
+		const result = await this.repository.GetChatList(id);
+
+		return result;
+	}
 }
 
 export default ChatMessageService;
